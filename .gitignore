@@ -1,0 +1,20 @@
+# Build artifacts
+build/
+firmware/build/
+*.o
+*.elf
+*.hex
+*.bin
+*.map
+*.lst
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

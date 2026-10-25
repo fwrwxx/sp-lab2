@@ -1,0 +1,27 @@
+name: Lab2 CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t stm32-build docker/
+      - name: Build firmware (ARM)
+        run: make build IMAGE=stm32-build
+      - name: Dependency rule check
+        run: sh scripts/check_deps.sh
+      - name: Host unit tests
+        run: make test IMAGE=stm32-build
+      - name: Coverage (lcov)
+        run: make coverage IMAGE=stm32-build
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: firmware/tests/coverage.info

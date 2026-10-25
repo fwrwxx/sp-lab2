@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "author": "Shtyfliuk Olha",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "board-st-nucleo-c031c6", "id": "nucleo", "top": 0, "left": 0, "attrs": {} },
+    { "type": "wokwi-mpu6050", "id": "imu1", "top": -120, "left": 220, "attrs": { "accelX": "0.5" } },
+    { "type": "wokwi-potentiometer", "id": "pot1", "top": -80, "left": -160, "attrs": { "value": "0.5" } },
+    { "type": "wokwi-lcd1602", "id": "lcd1", "top": -180, "left": 400, "attrs": { "pins": "i2c" } },
+    { "type": "wokwi-servo", "id": "servo1", "top": 120, "left": 200, "attrs": { "horn": "double", "hornColor": "#0000FF" } },
+    { "type": "wokwi-25lc256", "id": "eeprom1", "top": 150, "left": -200, "attrs": {} },
+    {
+      "type": "wokwi-logic-analyzer",
+      "id": "logic1",
+      "top": 400,
+      "left": 0,
+      "attrs": {
+        "channelNames": "I2C_SCL,I2C_SDA,SPI_SCK,SPI_MOSI,SPI_MISO,SPI_CS,UART_TX,PWM"
+      }
+    }
+  ],
+  "connections": [
+    [ "nucleo:3V3", "imu1:VCC", "red", [ "v0" ] ],
+    [ "nucleo:GND", "imu1:GND", "black", [ "v0" ] ],
+    [ "nucleo:PB9", "imu1:SDA", "blue", [ "v0" ] ],
+    [ "nucleo:PB8", "imu1:SCL", "green", [ "v0" ] ],
+
+    [ "nucleo:3V3", "pot1:VCC", "red", [ "v0" ] ],
+    [ "nucleo:GND", "pot1:GND", "black", [ "v0" ] ],
+    [ "nucleo:PA0", "pot1:SIG", "orange", [ "v0" ] ],
+
+    [ "nucleo:3V3", "lcd1:VCC", "red", [ "v0" ] ],
+    [ "nucleo:GND", "lcd1:GND", "black", [ "v0" ] ],
+    [ "nucleo:PB9", "lcd1:SDA", "blue", [ "v0" ] ],
+    [ "nucleo:PB8", "lcd1:SCL", "green", [ "v0" ] ],
+
+    [ "nucleo:5V", "servo1:V+", "red", [ "v0" ] ],
+    [ "nucleo:GND", "servo1:GND", "black", [ "v0" ] ],
+    [ "nucleo:PA6", "servo1:PWM", "orange", [ "v0" ] ],
+
+    [ "nucleo:3V3", "eeprom1:VCC", "red", [ "v0" ] ],
+    [ "nucleo:GND", "eeprom1:GND", "black", [ "v0" ] ],
+    [ "nucleo:PA5", "eeprom1:SCK", "green", [ "v0" ] ],
+    [ "nucleo:PA7", "eeprom1:SI", "yellow", [ "v0" ] ],
+    [ "nucleo:PA11", "eeprom1:SO", "gray", [ "v0" ] ],
+    [ "nucleo:PB6", "eeprom1:CS", "purple", [ "v0" ] ],
+
+    [ "nucleo:PA2", "$serialMonitor:RX", "", [] ],
+    [ "nucleo:PA3", "$serialMonitor:TX", "", [] ],
+
+    [ "logic1:D0", "nucleo:PB8", "green", [] ],
+    [ "logic1:D1", "nucleo:PB9", "blue", [] ],
+    [ "logic1:D2", "nucleo:PA5", "yellow", [] ],
+    [ "logic1:D3", "nucleo:PA7", "orange", [] ],
+    [ "logic1:D4", "nucleo:PA11", "purple", [] ],
+    [ "logic1:D5", "nucleo:PB6", "gray", [] ],
+    [ "logic1:D6", "nucleo:PA2", "white", [] ],
+    [ "logic1:D7", "nucleo:PB0", "red", [] ]
+  ],
+  "dependencies": {}
+}
